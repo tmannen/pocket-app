@@ -1,0 +1,17 @@
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+
+<form method="POST" action="{{ url_for('search') }}" accept-charset="UTF-8">
+<input name="search_input" type="text" value="{{search_term}}">
+<input type="submit" value="Search">
+</form>
+
+{% for link in results %}
+<div class="result">
+<a href="{{link[0]}}" class="pocket_link">{{link[1]}}</a>
+{% for tag in link[3].split(",") %}
+<div class="tag">{{tag}}</div>
+{% endfor %}
+
+<br />
+</div>
+{% endfor %}

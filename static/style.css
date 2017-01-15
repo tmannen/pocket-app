@@ -1,0 +1,33 @@
+body {
+	font-family:"proxima-nova",sans-serif;
+}
+
+.tag {
+	background: #eeeeee;
+	margin: 5px;
+	padding: 5px;
+	display: inline-block;
+	border-radius: 8px;
+	cursor: hand;
+	/*color: #fefefe;*/	
+}
+
+.formblock {
+	width: 30%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.search_form {
+	width: 300px;
+	padding: 3px;
+	font-size: 16;
+	font-family:"proxima-nova",sans-serif;
+}
+
+.searchbutton {
+	background: #dfdfdf;
+	font-size: 14;
+	height: 2em;
+	border: 1px;
+}

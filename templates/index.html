@@ -1,0 +1,18 @@
+{% block head %}
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+{% endblock %}
+{% block content %}
+<form method="POST" action="{{ url_for('search') }}" accept-charset="UTF-8" class="formblock">
+<input name="search_input" type="text" value="learn" class="search_form">
+<input type="submit" value="Search" class="searchbutton">
+</form>
+
+<div class="tags">
+{% for tag in tags %}
+<a><div class="tag" onclick="addTagToSearch(this)">{{tag}}</div></a>
+{% endfor %}
+
+<br />
+</div>
+{% endblock %}
