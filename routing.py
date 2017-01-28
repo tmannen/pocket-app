@@ -1,22 +1,23 @@
-from bs4 import BeautifulSoup
-import sqlite3
 import os
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
 from pocket import Pocket, PocketException
 import requests
+import pickle
 
 DEBUG = True
-all_tags = None
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-tag_dict = {}
+#These are global so they stay while going to different parts of website, no need for database (yet?)
+tag_dict = None
+all_tags = None
 all_links = list()
 
 def pocket_api_call():
     p = Pocket(
-        ##tähäm
+        consumer_key='',
+        access_token=''
     )
 
     try:
@@ -38,24 +39,36 @@ def pocket_api_call():
         except KeyError:
             pass
 
-    return all_tags
+    return all_tags  
 
-def build_tags():
-    soup = BeautifulSoup(open("pocket_data.html", "r"))
-    links = soup.find_all('a')
-    all_tags = None
+def data_from_pickle():
+    tags = set()
+    items = list() #pocket links with metadata and stuff
+    data = pickle.load(open("data/filteredpocket.pickle", "rb"))
 
-    for link in links:
-        link_url = link.attrs['href']
-        link_tags = link.attrs['tags']
-        link_time_added = link.attrs['time_added']
-        link_description = link.get_text()
+    for link in data:
+        #extract all unique tags, some have no tags
+        link_tags = list(link['tags'].keys())
+        tags = tags.union(link_tags)
+        items.append(link) #all_links is global
 
-        for tag in link.attrs['tags'].split(","):
-            if tag_dict.get(tag) == None:
-                tag_dict[tag] = set()
-            
-            tag_dict[tag].add((link_url, link_description, link_time_added, link_tags))
+    return tags, items
+
+def build_tags_from_pocket():
+    tagdictionary = {}
+    for link in all_links:
+        link_url = link['resolved_url']
+        link_tags = tuple(link['tags'].keys())
+        link_time_added = link['time_added']
+        link_title = link['resolved_title']
+ 
+        for tag in link['tags'].keys():
+            if tagdictionary.get(tag) == None:
+                tagdictionary[tag] = set()
+             
+            tagdictionary[tag].add((link_url, link_title, link_time_added, link_tags))
+
+    return tagdictionary
 
 @app.route('/auth', methods=['POST', 'GET'])
 def auth():
@@ -75,9 +88,11 @@ def auth():
 @app.route('/', methods=['POST', 'GET'])
 def index():
     global all_tags
+    global all_links
 
     if all_tags == None:
-        all_tags = sorted(list(pocket_api_call()))
+        all_tags, all_links = data_from_pickle()
+        all_tags = sorted(list(all_tags))
 
     if request.method == 'POST':
         search_term = request.form['search_input']
@@ -87,8 +102,9 @@ def index():
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
-    if len(tag_dict) == 0:
-        build_tags()
+    global tag_dict
+    if tag_dict == None:
+        tag_dict = build_tags_from_pocket()
 
     if request.method == 'POST':
         search_term = request.form['search_input']
@@ -105,6 +121,9 @@ def search():
             results = results.intersection(tag_dict[tag])
 
     except KeyError:
+        return render_template('noresults.html', search_term=search_term)
+
+    if len(results) == 0:
         return render_template('noresults.html', search_term=search_term)
 
     return render_template('posts.html', results=results, tags=tags, search_term=search_term)
