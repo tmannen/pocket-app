@@ -9,6 +9,7 @@ from flask_cors import CORS
 
 DEBUG = True
 app = Flask(__name__)
+#needed for cross request from same domain
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.config.from_object(__name__)
 
