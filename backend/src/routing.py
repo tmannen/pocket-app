@@ -1,78 +1,22 @@
-import os
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, jsonify
 from pocket import Pocket, PocketException
 import requests
 import pickle
+import controllers
 
 from flask_cors import CORS
 
 DEBUG = True
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../templates")
 #needed for cross request from same domain
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.config.from_object(__name__)
 
+#Create data structures for faster fetching later
 #These are global so they stay while going to different parts of website, no need for database (yet?)
-tag_dict = None
-all_tags = None
-all_links = list()
 
-def pocket_api_call():
-    p = Pocket(
-        consumer_key='',
-        access_token=''
-    )
-
-    try:
-        #retrieve all articles
-        links = p.retrieve(detailType='complete')
-    except PocketException as e:
-        print("Pocket retrieve failed, message: ")
-        print(e.message)
-        print("\n")
-
-    all_tags = set()
-
-    for key, link in links['list'].items():
-        #extract all unique tags, some have no tags
-        try:
-            link_tags = list(link['tags'].keys())
-            all_tags = all_tags.union(link_tags)
-            all_links.append(link)
-        except KeyError:
-            pass
-
-    return all_tags  
-
-def data_from_pickle():
-    tags = set()
-    items = list() #pocket links with metadata and stuff
-    data = pickle.load(open("../data/filteredpocket.pickle", "rb"))
-
-    for link in data:
-        #extract all unique tags, some have no tags
-        link_tags = list(link['tags'].keys())
-        tags = tags.union(link_tags)
-        items.append(link) #all_links is global
-
-    return tags, items
-
-def build_tags_from_pocket():
-    tagdictionary = {}
-    for link in all_links:
-        link_url = link['resolved_url']
-        link_tags = tuple(link['tags'].keys())
-        link_time_added = link['time_added']
-        link_title = link['resolved_title']
- 
-        for tag in link['tags'].keys():
-            if tagdictionary.get(tag) == None:
-                tagdictionary[tag] = set()
-             
-            tagdictionary[tag].add((link_url, link_title, link_time_added, link_tags))
-
-    return tagdictionary
+all_links, tag_dict = controllers.data_from_pickle()
 
 @app.route('/auth', methods=['POST', 'GET'])
 def auth():
@@ -91,36 +35,18 @@ def auth():
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    global all_tags
-    global all_links
-
-    if all_tags == None:
-        all_tags, all_links = data_from_pickle()
-        all_tags = sorted(list(all_tags))
-
     if request.method == 'POST':
         search_term = request.form['search_input']
         return redirect(url_for('search', q=search_term))
 
-    return render_template('index.html', tags=all_tags)
+    return render_template('index.html', tags=list(tag_dict.keys()))
 
 @app.route('/tags', methods=['POST', 'GET'])
-
 def json_tags():
-    global all_tags
-
-    if all_tags == None:
-        all_tags, all_links = data_from_pickle()
-        all_tags = sorted(list(all_tags))
-
-    return jsonify(all_tags)
+    return jsonify(list(tag_dict.keys()))
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
-    global tag_dict
-    if tag_dict == None:
-        tag_dict = build_tags_from_pocket()
-
     if request.method == 'POST':
         search_term = request.form['search_input']
         return redirect(url_for('search', q=search_term))
