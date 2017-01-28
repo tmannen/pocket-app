@@ -48,7 +48,7 @@ def pocket_api_call():
 def data_from_pickle():
     tags = set()
     items = list() #pocket links with metadata and stuff
-    data = pickle.load(open("data/filteredpocket.pickle", "rb"))
+    data = pickle.load(open("../data/filteredpocket.pickle", "rb"))
 
     for link in data:
         #extract all unique tags, some have no tags
