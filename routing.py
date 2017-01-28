@@ -100,6 +100,16 @@ def index():
 
     return render_template('index.html', tags=all_tags)
 
+@app.route('/tags', methods=['POST', 'GET'])
+def json_tags():
+    global all_tags
+
+    if all_tags == None:
+        all_tags, all_links = data_from_pickle()
+        all_tags = sorted(list(all_tags))
+
+    return jsonify(all_tags)
+
 @app.route('/search', methods=['POST', 'GET'])
 def search():
     global tag_dict
