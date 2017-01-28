@@ -5,8 +5,11 @@ from pocket import Pocket, PocketException
 import requests
 import pickle
 
+from flask_cors import CORS
+
 DEBUG = True
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.config.from_object(__name__)
 
 #These are global so they stay while going to different parts of website, no need for database (yet?)
@@ -101,6 +104,7 @@ def index():
     return render_template('index.html', tags=all_tags)
 
 @app.route('/tags', methods=['POST', 'GET'])
+
 def json_tags():
     global all_tags
 
