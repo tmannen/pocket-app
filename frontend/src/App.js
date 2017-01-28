@@ -9,8 +9,9 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {data: mockdata, searchInput: ''};
+        this.state = {data: [], searchInput: ''};
         this.handleChange = this.handleChange.bind(this);
+        this.searchTags = this.searchTags.bind(this);
     }
 
     componentDidMount() {
@@ -23,16 +24,24 @@ class App extends Component {
 
     filterData(){
         let myState = this.state;
-        return _.filter(myState.data.tags, function(o){
+        return _.filter(myState.data, function(o){
             return o.indexOf(myState.searchInput)>-1;
         });
     }
 
     tagList() {
-        /*return $.getJSON('https://randomuser.me/api/')
-            .then((data) => {
-                this.setState({ person: data.results });
-            });*/
+        return $.getJSON('http://127.0.0.1:5000/tags')
+            .then((tags) => {
+                this.setState({ data: tags });
+            });
+    }
+
+    searchTags() {
+        return $.getJSON('http://127.0.0.1:5000/search?q='+this.state.searchInput)
+            .then((tags) => {
+            console.log(tags)
+                this.setState({ data: tags });
+            });
     }
 
   render() {
@@ -45,7 +54,7 @@ class App extends Component {
               <div className="input-group">
                 <input type="text" value={this.state.searchInput} onChange={this.handleChange} className="form-control" placeholder="Search for..."/>
                 <span className="input-group-btn">
-                <button className="btn btn-default" type="button">Go!</button>
+                <button className="btn btn-default" type="button" onClick={this.searchTags} >Go!</button>
               </span>
               </div>
             </div>
