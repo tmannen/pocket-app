@@ -40,7 +40,7 @@ def index():
 
 @app.route('/tags', methods=['POST', 'GET'])
 def json_tags():
-    return jsonify(tags=list(tag_dict.keys()))
+    return jsonify(tags=sorted(list(tag_dict.keys())))
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():

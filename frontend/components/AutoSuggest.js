@@ -28,8 +28,10 @@ class AutoSuggest extends Component {
                 this.handleEnter(tag);
             }
         }
-        if (event.key==='ArrowDown' || event.key==='ArrowUp')
+
+        if (event.key==='ArrowDown' || event.key==='ArrowUp' || event.key==='Backspace')
             this.navigateWithKeys(event.key);
+
     }
 
     handleEnter(tag) {
@@ -43,6 +45,8 @@ class AutoSuggest extends Component {
             this.state.navigation--;
         if (key==='ArrowDown' && this.state.navigation<=this.filterData().length-1)
             this.state.navigation++;
+        if (key==='Backspace')
+            this.state.navigation = 0; //so that if we're at the third one for example and delete, we go back to start
         let self = this;
         let elements = document.getElementsByClassName('tk-autosuggest-tag');
         _.forEach(elements,function(object, i){
@@ -62,6 +66,7 @@ class AutoSuggest extends Component {
     }
 
     handleChange(event) {
+        console.log("asd")
         this.setState({searchInput: event.target.value});
     }
 
