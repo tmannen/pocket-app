@@ -4,13 +4,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 import $ from 'jquery';
 import _ from 'lodash';
 import { router, browserHistory } from 'react-router'
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
+
 class Main extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {data: [], searchInput: ''};
+        this.state = {data: [], searchInput: '', tagInputs: []};
         this.handleChange = this.handleChange.bind(this);
         this.searchTags = this.searchTags.bind(this);
+        this.handleTagChange = this.handleTagChange.bind(this);
     }
 
     componentDidMount() {
@@ -19,6 +23,9 @@ class Main extends Component {
 
     handleChange(event) {
         this.setState({searchInput: event.target.value});
+    }
+    handleTagChange(tags){
+        this.setState({tagInputs: tags});
     }
 
     filterData(){
@@ -50,7 +57,7 @@ class Main extends Component {
                     <form className="form-container">
                         <div className="col-lg-6 col-lg-offset-3">
                             <div className="input-group">
-                                <input type="text" value={this.state.searchInput} onChange={this.handleChange} className="form-control" placeholder="Search for..."/>
+                                <TagsInput value={this.state.tagInputs} onChange={this.handleTagChange} />
                                 <span className="input-group-btn">
                                     <button className="btn btn-default" type="button" onClick={this.searchTags} >Go!</button>
                                 </span>
