@@ -44,3 +44,16 @@
 .react-tagsinput{
   height: 34px;
 }
+.tk-autosuggest-tag{
+  background-color: #81aa52;
+  padding: 3px;
+  padding-left: 5px;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.tk-autosuggest-tag.selected{
+  background-color: #546caa;
+}
