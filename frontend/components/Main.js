@@ -23,6 +23,7 @@ class Main extends Component {
 
     handleChange(event) {
         this.setState({searchInput: event.target.value});
+        console.log(event.target.value)
     }
     handleTagChange(tags){
         this.setState({tagInputs: tags});
@@ -37,15 +38,15 @@ class Main extends Component {
 
     tagList() {
         return $.getJSON('http://127.0.0.1:5000/tags')
-            .then((tags) => {
-                this.setState({ data: tags });
+            .then((data) => {
+                this.setState({ data: data.tags });
             });
     }
 
     searchTags() {
         browserHistory.push({
             pathname: 'search',
-            query: { q: this.state.searchInput}
+            query: { q: this.state.tagInputs.join(",")}
         });
     }
 

@@ -43,7 +43,7 @@ def index():
 
 @app.route('/tags', methods=['POST', 'GET'])
 def json_tags():
-    return jsonify(list(tag_dict.keys()))
+    return jsonify(tags=list(tag_dict.keys()))
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
@@ -67,7 +67,7 @@ def search():
     if len(results) == 0:
         return render_template('noresults.html', search_term=search_term)
 
-    return jsonify(list(results))
+    return jsonify(results=list(results))
     #return render_template('posts.html', results=results, tags=tags, search_term=search_term)
 
 if __name__ == '__main__':

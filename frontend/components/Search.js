@@ -8,7 +8,7 @@ class Search extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {data: [], searchInput: ''};
+        this.state = {data: {}, searchInput: this.props.location.query};
         this.handleChange = this.handleChange.bind(this);
         this.searchTags = this.searchTags.bind(this);
     }
@@ -22,9 +22,11 @@ class Search extends Component {
     }
 
     searchTags() {
-        return $.getJSON('http://127.0.0.1:5000/search?q='+this.state.searchInput)
-            .then((tags) => {
-                this.setState({ data: tags });
+        console.log(this.state.searchInput)
+        return $.getJSON('http://127.0.0.1:5000/search?q='+this.state.searchInput.q)
+            .then((data) => {
+                console.log(data)
+                this.setState({ data: data });
             });
     }
 
@@ -32,7 +34,7 @@ class Search extends Component {
 
         return (
             <div className="container">
-                {_.map(this.data, function(object, i){
+                {_.map(this.state.data.results, function(object, i){
                     return <span className="tag-label" key={i}>{object}</span>
                 })}
             </div>
