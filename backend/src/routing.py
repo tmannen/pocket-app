@@ -53,7 +53,6 @@ def search():
 
     try:
         results = set(tag_dict[tags[0]])
-
         for tag in tags[1:]:
             results = results.intersection(tag_dict[tag])
 

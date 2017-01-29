@@ -40,6 +40,7 @@ class Main extends Component {
         let newTags = this.state.tagInputs.slice();
         newTags.push(tag);
         this.setState({tagInputs: newTags});
+        this.setState({currentValue: ''})
     }
 
     filterData(){
@@ -81,6 +82,7 @@ class Main extends Component {
                                 inputVal={this.state.currentValue}
                                 keyInputsFromClass={"react-tagsinput-input"}
                                 addToTags={this.addToTags}
+                                searchTags={this.searchTags}
                             />
                         </div>
                     </form>

@@ -17,10 +17,16 @@ class AutoSuggest extends Component {
     }
 
     handleKeys(event) {
-        if (event.key==='Enter' && document.getElementsByClassName('tk-autosuggest-tag selected')){
+        if (event.key==='Enter' && this.state.inputVal === '')
+            this.props.searchTags();
+        if (event.key==='Enter'){
             event.preventDefault();
-            let tag = document.getElementsByClassName('tk-autosuggest-tag selected')[0].innerText;
-            this.handleEnter(tag);
+            if(document.getElementsByClassName('tk-autosuggest-tag selected')[0] === undefined)
+                this.handleEnter(this.state.inputVal);
+            else {
+                let tag = document.getElementsByClassName('tk-autosuggest-tag selected')[0].innerText;
+                this.handleEnter(tag);
+            }
         }
         if (event.key==='ArrowDown' || event.key==='ArrowUp')
             this.navigateWithKeys(event.key);
@@ -29,6 +35,7 @@ class AutoSuggest extends Component {
     handleEnter(tag) {
         console.log(tag)
         this.props.addToTags(tag)
+        this.state.navigation = 0
     }
 
     navigateWithKeys(key) {
