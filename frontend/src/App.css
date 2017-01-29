@@ -38,3 +38,9 @@
 .tag-container{
   margin-top: 20px;
 }
+.react-tagsinput-tag{
+  padding: 2px !important;
+}
+.react-tagsinput{
+  height: 34px;
+}
