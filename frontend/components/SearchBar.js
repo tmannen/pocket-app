@@ -20,6 +20,10 @@ class SearchBar extends Component {
         this.addToTags = this.addToTags.bind(this);
     }
 
+    componentDidMount() {
+        this.tagList();
+    }
+
     handleChange(event) {
         this.setState({searchInput: event.target.value});
     }
@@ -37,6 +41,13 @@ class SearchBar extends Component {
         newTags.push(tag);
         this.setState({tagInputs: newTags});
         this.setState({currentValue: ''})
+    }
+
+    tagList() {
+        return $.getJSON('http://127.0.0.1:5000/tags')
+            .then((data) => {
+                this.setState({ data: data.tags });
+            });
     }
 
     searchTags() {

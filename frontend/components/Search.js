@@ -14,7 +14,7 @@ class Search extends Component {
     }
 
     componentDidMount() {
-        this.queryServer();
+        this.queryServer(); //how to make this run when using the search bar in /search?
     }
 
     queryServer() {

@@ -19,7 +19,7 @@ class AutoSuggest extends Component {
     handleKeys(event) {
         if (event.key==='Enter' && this.state.inputVal === '')
             this.props.searchTags();
-        if (event.key==='Enter'){
+        else if (event.key==='Enter'){
             event.preventDefault();
             if(document.getElementsByClassName('tk-autosuggest-tag selected')[0] === undefined)
                 this.handleEnter(this.state.inputVal);
