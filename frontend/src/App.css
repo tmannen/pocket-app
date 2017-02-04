@@ -44,11 +44,14 @@
 .react-tagsinput{
   height: 34px;
 }
+.tk-autosuggest{
+  position:absolute;
+  background-color: #fdfdfd;
+}
 .tk-autosuggest-tag{
-  background-color: #81aa52;
   padding: 3px;
   padding-left: 5px;
-  color: #ffffff;
+  color: #333333;
   font-weight: bold;
   border-radius: 4px;
   margin-top: 2px;

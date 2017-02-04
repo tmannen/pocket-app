@@ -20,18 +20,15 @@ all_links, tag_dict = controllers.data_from_pickle()
 
 @app.route('/auth', methods=['POST', 'GET'])
 def auth():
-    #Used to authenticate with pocket, not working yet
-    if request.method == 'POST':
-        consumer_key = request.form['consumer_key']
-        redirect_uri = request.form['redirect_uri']
+    #Used to authenticate with pocket
+    redirect_uri, code = controllers.request_authentication()
 
-        r = requests.post("https://getpocket.com/v3/oauth/request", data={'consumer_key': consumer_key, 'redirect_uri': redirect_uri})
-        code = r.text.split("=")[1]
+    return redirect("https://getpocket.com/auth/authorize" + "?request_token=" + code + "&" + "redirect_uri=" + redirect_uri)
 
-        return redirect("https://getpocket.com/auth/authorize" + "?request_token=" + code + "&" + "redirect_uri=" + "127.0.0.1:5000")
-
-    return render_template('pocket_auth.html')
-
+@app.route('/authstatus', methods=['POST', 'GET'])
+def authstatus():
+    tags = controllers.pocket_api_call()
+    return render_template('index.html', tags=list(tags))
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -43,7 +40,7 @@ def index():
 
 @app.route('/tags', methods=['POST', 'GET'])
 def json_tags():
-    return jsonify(tags=list(tag_dict.keys()))
+    return jsonify(tags=sorted(list(tag_dict.keys())))
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
@@ -53,19 +50,14 @@ def search():
 
     search_term = request.args.get('q', '')
     tags = [tag.strip() for tag in search_term.split(",")]
-    results = None
 
     try:
         results = set(tag_dict[tags[0]])
-
         for tag in tags[1:]:
             results = results.intersection(tag_dict[tag])
 
     except KeyError:
-        return render_template('noresults.html', search_term=search_term)
-
-    if len(results) == 0:
-        return render_template('noresults.html', search_term=search_term)
+        results = []
 
     return jsonify(results=list(results))
     #return render_template('posts.html', results=results, tags=tags, search_term=search_term)
