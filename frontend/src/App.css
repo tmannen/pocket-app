@@ -60,3 +60,52 @@
 .tk-autosuggest-tag.selected{
   background-color: #546caa;
 }
+.search-tag{
+  font-size: 20px;
+  color: #5cb85c;
+}
+.icon-holder{
+  margin: 5px;
+  position: absolute;
+  bottom: 30px;
+}
+.icon-holder-time{
+  position: absolute;
+  bottom: 0;
+  margin: 5px;
+}
+.icon-holder .glyphicon{
+  margin-right: 5px;
+  top: 5px;
+}
+.thumbnail{
+  word-break: break-all;
+  height: 400px;
+  position: relative;
+}
+.thumbnail-container{
+  margin-top: 20px;
+}
+.thumbnail-container h3{
+  font-size: 14px;
+}
+.object-tag{
+  display: inline-block;
+  background-color: #2fa4e7;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 3px;
+  margin: 2px;
+  padding: 2px;
+}
+.time-holder{
+  font-size: 10px;
+  color: #9c9c9c;
+}
+.icon-holder-time .glyphicon{
+  color: #9c9c9c;
+  font-size: 20px;
+  top: 5px;
+  margin-right: 5px;
+}
