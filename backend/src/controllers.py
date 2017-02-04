@@ -38,26 +38,19 @@ def pocket_api_call():
 
 def data_from_pickle():
     tags = set()
-    items = list() #pocket links with metadata and stuff
     data = pickle.load(open("../../data/filteredpocket.pickle", "rb"))
     tagdictionary = {}
-    for link in data:
+    for idx, link in enumerate(data):
         #extract all unique tags, some have no tags
         link_tags = list(link['tags'].keys())
-        tags = tags.union(link_tags)
-        items.append(link)
-        link_url = link['resolved_url']
-        link_tags = tuple(link['tags'].keys())
-        link_time_added = link['time_added']
-        link_title = link['resolved_title']
  
         for tag in link['tags'].keys():
             if tagdictionary.get(tag) == None:
                 tagdictionary[tag] = set()
              
-            tagdictionary[tag].add((link_url, link_title, link_time_added, link_tags))
+            tagdictionary[tag].add(idx)
 
-    return items, tagdictionary
+    return data, tagdictionary
 
 def request_authentication():
     consumer_key = open("../../keys.txt", "r").read()

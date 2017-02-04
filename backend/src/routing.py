@@ -52,13 +52,15 @@ def search():
     tags = [tag.strip() for tag in search_term.split(",")]
 
     try:
-        results = set(tag_dict[tags[0]])
+        indexes = set(tag_dict[tags[0]])
         for tag in tags[1:]:
-            results = results.intersection(tag_dict[tag])
+            indexes = indexes.intersection(tag_dict[tag])
 
     except KeyError:
-        results = []
+        indexes = []
 
+
+    results = [all_links[i] for i in indexes]
     return jsonify(results=list(results))
     #return render_template('posts.html', results=results, tags=tags, search_term=search_term)
 
