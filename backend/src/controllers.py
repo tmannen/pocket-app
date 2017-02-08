@@ -2,9 +2,6 @@ from pocket import Pocket, PocketException
 import requests
 import pickle
 
-from flask_cors import CORS
-code = None
-
 def pocket_api_call():
     data, consumer_key = access_api()
     access_token = data['access_token']
@@ -59,8 +56,7 @@ def request_authentication():
     content = {'consumer_key': consumer_key, 'redirect_uri': redirect_uri}
 
     r = requests.post("https://getpocket.com/v3/oauth/request", json=content, headers=headers)
-    global code
-    code = r.json()['code'] #save for use in later api access
+    code = r.json()['code']
 
     return redirect_uri, code
 

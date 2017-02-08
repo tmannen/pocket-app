@@ -44,9 +44,14 @@
 .react-tagsinput{
   height: 34px;
 }
-.tk-autosuggest{
-  position:absolute;
+.react-tagsinput-input{
+  width: 150px !important;
+}
+.autosuggest-container{
+  position: absolute;
   background-color: #fdfdfd;
+  z-index: 1;
+  min-width: 100px;
 }
 .tk-autosuggest-tag{
   padding: 3px;
@@ -79,16 +84,24 @@
   top: 5px;
 }
 .thumbnail{
-  word-break: break-all;
+  word-wrap: break-word;
   height: 400px;
   position: relative;
 }
 .thumbnail-container{
   margin-top: 20px;
+  text-overflow: ellipsis;
 }
 .thumbnail-container h3{
-  font-size: 14px;
+  font-size: 18px;
 }
+
+.thumbnail-container a{
+  color: #313131;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
 .object-tag{
   display: inline-block;
   background-color: #2fa4e7;

@@ -32,7 +32,7 @@ class Search extends Component {
             <div className="container">
                 <SearchBar clickFunction={this.queryServer.bind(this)}/>
                 <div className="col-sm-12 thumbnail-container">
-                    {_.map(this.state.data.results, function(object, i){
+                    {_.map(_.orderBy(this.state.data.results, 'time_added', 'desc'), function(object, i){
                             return <div className="col-sm-3">
                                         <div className="thumbnail" key={i}>
                                             <div className="caption">

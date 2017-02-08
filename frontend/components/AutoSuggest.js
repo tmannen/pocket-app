@@ -61,10 +61,6 @@ class AutoSuggest extends Component {
         this.setState({data: nextProps.data, inputVal: nextProps.inputVal});
     }
 
-    componentWillUpdate(){
-
-    }
-
     handleChange(event) {
         console.log("asd")
         this.setState({searchInput: event.target.value});
@@ -79,7 +75,7 @@ class AutoSuggest extends Component {
 
     render() {
         return (
-            <div className="tk-autosuggest">
+            <div className="autosuggest-container">
                 {_.map(this.filterData(), function(object, i){
                     return <div className="tk-autosuggest-tag" key={i}>{object}</div>
                 })}
