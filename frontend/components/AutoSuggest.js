@@ -62,7 +62,6 @@ class AutoSuggest extends Component {
     }
 
     handleChange(event) {
-        console.log("asd")
         this.setState({searchInput: event.target.value});
     }
 

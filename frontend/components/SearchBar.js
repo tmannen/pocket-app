@@ -66,7 +66,12 @@ class SearchBar extends Component {
                     <form className="form-container">
                         <div className="col-lg-6 col-lg-offset-3">
                             <div className="input-group">
-                                <TagsInput id="tagsinput-tk" value={this.state.tagInputs} inputValue={this.state.currentValue} onChangeInput={this.handleInputChange} onChange={this.handleTagChange} />
+                                <TagsInput id="tagsinput-tk" 
+                                    value={this.state.tagInputs} 
+                                    inputValue={this.state.currentValue} 
+                                    inputProps={{className: 'react-tagsinput-input', placeholder: 'Search for a tag..'}}
+                                    onChangeInput={this.handleInputChange} 
+                                    onChange={this.handleTagChange} />
                                 <span className="input-group-btn">
                                     <button className="btn btn-default" type="button" onClick={this.searchTags} >Go!</button>
                                 </span>

@@ -29,8 +29,8 @@
   color: #ffffff;
   padding: 3px;
   margin: 5px;
-  line-height: 2;
-  background: #2fa4e7;
+  line-height: 1.2;
+  background: #b1b2b2;
   border-radius: 4px;
   font-weight: bold;
   display: inline-block;
@@ -45,7 +45,7 @@
   height: 34px;
 }
 .react-tagsinput-input{
-  width: 150px !important;
+  width: 160px !important;
 }
 .autosuggest-container{
   position: absolute;
