@@ -35,7 +35,6 @@ class AutoSuggest extends Component {
     }
 
     handleEnter(tag) {
-        console.log(tag)
         this.props.addToTags(tag)
         this.state.navigation = 0
     }

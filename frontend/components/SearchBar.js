@@ -51,12 +51,11 @@ class SearchBar extends Component {
     }
 
     searchTags() {
-        let query = this.state.tagInputs.join(",");
         browserHistory.push({
             pathname: 'search',
             query: { q: this.state.tagInputs.join(",")}
         });
-        this.props.clickFunction(query);
+
     }
 
     render() {
