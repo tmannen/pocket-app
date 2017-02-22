@@ -111,6 +111,7 @@
   border-radius: 3px;
   margin: 2px;
   padding: 2px;
+  cursor: pointer;
 }
 .time-holder{
   font-size: 10px;

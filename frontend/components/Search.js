@@ -47,16 +47,16 @@ class Search extends Component {
                 <SearchBar />
                 <div className="col-sm-12 thumbnail-container">
                     {_.map(_.orderBy(this.state.data.results, 'time_added', 'desc'), function(object, i){
-                        return <div className="col-sm-3">
-                                    <div className="thumbnail" key={i}>
+                        return <div className="col-sm-3" key={i}>
+                                    <div className="thumbnail">
                                         <div className="caption">
                                             <h3><a href={object.resolved_url}>{object.resolved_title}</a></h3>
                                             <p>{object.excerpt}</p>
                                         </div>
                                         <div className="icon-holder">
                                             <div className="glyphicon glyphicon-tags search-tag"></div>
-                                            {_.map(object.tags, function(tag, index){
-                                                return <div className="object-tag" onClick={self.queryServerWithTag.bind(self, index)}>{index}</div>;
+                                            {_.map(Object.keys(object.tags), function(tag, index){
+                                                return <div className="object-tag" key={index} onClick={self.queryServerWithTag.bind(self, tag)}>{tag}</div>;
                                             })}
                                         </div>
                                         <div className="icon-holder-time">
