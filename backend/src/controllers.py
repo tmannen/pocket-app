@@ -1,6 +1,9 @@
 from pocket import Pocket, PocketException
 import requests
 import pickle
+import sqlite3
+
+DB_PATH = "../../data/userdata.db"
 
 def pocket_api_call():
     data, consumer_key = access_api()
@@ -66,3 +69,12 @@ def access_api():
     content = {'consumer_key': consumer_key, 'code': code}
     r = requests.post("https://getpocket.com/v3/oauth/authorize", json=content, headers=headers)
     return r.json(), consumer_key
+
+def query_db(query, args=()):
+    connection = sqlite3.connect("")
+    rv = cur.fetchall()
+    cur.close()
+    return rv
+
+def build_tag_query(tags):
+    #for tag in tags, AND interesection jne.

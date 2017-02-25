@@ -1,7 +1,7 @@
 import sqlite3
 
 def create_database():
-    connection = sqlite3.connect("../../data/userdata.db")
+    connection = sqlite3.connect("../data/userdata.db")
 
     try:
         connection.execute('''CREATE TABLE LINKS
@@ -29,7 +29,7 @@ def create_database():
 
 #Create database for fast text searching.
 def create_fts(conn):
-	conn = sqlite3.connect("../../data/userdata.db")
+	conn = sqlite3.connect("../data/userdata.db")
 	query = """CREATE VIRTUAL TABLE LINK_SEARCH USING fts4(
 		 TAGS,
          ITEM_ID INT,
