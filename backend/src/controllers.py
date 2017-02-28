@@ -70,11 +70,24 @@ def access_api():
     r = requests.post("https://getpocket.com/v3/oauth/authorize", json=content, headers=headers)
     return r.json(), consumer_key
 
-def query_db(query, args=()):
-    connection = sqlite3.connect("")
-    rv = cur.fetchall()
-    cur.close()
-    return rv
+def query_db(query):
+    rows = None
+    result = None
+
+    try:
+        with sqlite3.connect("../../data/userdata.db") as connection:
+            connection.row_factory = sqlite3.Row
+            rows = connection.execute(query).fetchall()
+
+        result = [dict(zip(row.keys(), row)) for row in rows] #return values in a list of dictionaries instead of just tuples
+
+    except sqlite3.OperationalError as e:
+        print(e)
+
+    return result
 
 def build_tag_query(tags):
-    #for tag in tags, AND interesection jne.
+    #for tag in tags, AND intersection jne.
+    tags = ["\"{}\"".format(tag) for tag in tags]
+    q = "SELECT * FROM LINK_SEARCH WHERE tags MATCH '" + " ".join(tags) + "'" #AND doesnt work in multiple tag search, bug?
+    return query_db(q)
