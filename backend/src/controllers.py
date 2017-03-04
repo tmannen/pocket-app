@@ -87,7 +87,7 @@ def query_db(query):
     return result
 
 def build_tag_query(tags):
-    #for tag in tags, AND intersection jne.
+    #for tag in tags, AND intersection jne. SQL injection possible?
     tags = ["\"{}\"".format(tag) for tag in tags]
     q = "SELECT * FROM LINK_SEARCH WHERE tags MATCH '" + " ".join(tags) + "'" #AND doesnt work in multiple tag search, bug?
     return query_db(q)

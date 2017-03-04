@@ -14,6 +14,7 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {data: [], searchInput: ''};
+        this.queryServerWithTag = this.queryServerWithTag.bind(this);
     }
 
     componentDidMount() {
@@ -34,14 +35,21 @@ class Main extends Component {
             });
     }
 
-    render() {
+    queryServerWithTag(tag) {
+        browserHistory.push({
+            pathname: 'search',
+            query: { q: tag}
+        });
+    }
 
+    render() {
+        var self = this;
         return (
             <div className="container">
                 <SearchBar/>
                 <div className="row tag-container">
-                    {_.map(this.filterData(), function(object, i){
-                        return <span className="tag-label" key={i}>{object}</span>
+                    {_.map(this.filterData(), function(tag, i){
+                        return <span className="object-tag" key={i} onClick={self.queryServerWithTag.bind(self, tag)}>{tag}</span>
                     })}
                 </div>
             </div>

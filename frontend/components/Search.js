@@ -44,13 +44,14 @@ class Search extends Component {
         var self = this;
         return (
             <div className="container">
-                <SearchBar />
+                <SearchBar tags={this.props.location.query.q} />
                 <div className="col-sm-12 thumbnail-container">
                     {_.map(_.orderBy(this.state.data.results, 'time_added', 'desc'), function(object, i){
                         return <div className="col-sm-3" key={i}>
                                     <div className="thumbnail">
                                         <div className="caption">
-                                            <h3><a href={object.resolved_url}>{object.resolved_title}</a></h3>
+                                            <h3><a href={object.resolved_url}>{object.resolved_title === "" ? object.resolved_url : object.resolved_title} 
+                                            <p className="link_url">({object.resolved_url})</p></a></h3>
                                             <p>{object.excerpt}</p>
                                         </div>
                                         <div className="icon-holder">
