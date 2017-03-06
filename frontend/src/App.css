@@ -50,7 +50,7 @@
   height: 34px;
 }
 .react-tagsinput-input{
-  width: 160px !important;
+  width: 100% !important;
   margin-top: 2px;
 }
 .autosuggest-container{
