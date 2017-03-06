@@ -32,6 +32,25 @@ class Search extends Component {
             });
     }
 
+    excerpt(text){
+        return (text.length>200 ? text.substring(0, 140)+'...' : text);
+    }
+
+    extractDomain(url) {
+        let domain;
+
+        if (url.indexOf("://") > -1) {
+            domain = url.split('/')[2];
+        }
+        else {
+            domain = url.split('/')[0];
+        }
+
+        domain = domain.split(':')[0];
+
+        return domain;
+    }
+
     queryServerWithTag(tag) {
         //used when clicking a tag, this makes it so componentWillReceiveProps is called (?) and it queries the database
         browserHistory.push({
@@ -50,9 +69,9 @@ class Search extends Component {
                         return <div className="col-sm-3" key={i}>
                                     <div className="thumbnail">
                                         <div className="caption">
-                                            <h3><a href={object.resolved_url}>{object.resolved_title === "" ? object.resolved_url : object.resolved_title} 
-                                            <p className="link_url">({object.resolved_url})</p></a></h3>
-                                            <p>{object.excerpt}</p>
+                                            <h3><a href={object.resolved_url}>{object.resolved_title === "" ? object.resolved_url : object.resolved_title}</a>
+                                            <p className="link_url">({self.extractDomain(object.resolved_url)})</p></h3>
+                                            <p>{self.excerpt(object.excerpt)}</p>
                                         </div>
                                         <div className="icon-holder">
                                             <div className="glyphicon glyphicon-tags search-tag"></div>
