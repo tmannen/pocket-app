@@ -38,8 +38,13 @@
 .tag-container{
   margin-top: 20px;
 }
+.react-tagsinput{
+  padding-top: 0 !important;
+}
 .react-tagsinput-tag{
-  padding: 2px !important;
+  padding: 4px !important;
+  height: 26px;
+  margin-top: 3px !important;
 }
 .react-tagsinput{
   height: 34px;
@@ -105,6 +110,7 @@
 .link_url {
   font-size: 12px;
   color: #717171;
+  margin-top: 5px;
 }
 
 .object-tag{
