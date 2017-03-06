@@ -3,3 +3,4 @@ templates/pocket_auth.html
 .DS_Store
 __pycache__/
 keys.txt
+.idea/
