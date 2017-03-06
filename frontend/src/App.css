@@ -50,8 +50,8 @@
   height: 34px;
 }
 .react-tagsinput-input{
-  width: 100% !important;
-  margin-top: 2px;
+  width: 160px !important;
+  margin-top: 2px !important;
 }
 .autosuggest-container{
   position: absolute;
