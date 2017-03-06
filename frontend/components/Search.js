@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { router, browserHistory } from 'react-router'
 import moment from 'moment';
 import SearchBar from 'SearchBar'
-import 'animate.css'
+
 class Search extends Component {
 
     constructor(props) {
@@ -28,7 +28,6 @@ class Search extends Component {
     queryServer(query) {
         return $.getJSON('http://127.0.0.1:5000/search?q='+query)
             .then((data) => {
-                this.setState({ data: {} });
                 this.setState({ data: data });
             });
     }
@@ -68,7 +67,7 @@ class Search extends Component {
                 <div className="col-sm-12 thumbnail-container">
                     {_.map(_.orderBy(this.state.data.results, 'time_added', 'desc'), function(object, i){
                         return <div className="col-sm-3" key={i}>
-                                    <div className="thumbnail animated fadeIn">
+                                    <div className="thumbnail">
                                         <div className="caption">
                                             <h3><a href={object.resolved_url}>{object.resolved_title === "" ? object.resolved_url : object.resolved_title}</a>
                                             <p className="link_url">({self.extractDomain(object.resolved_url)})</p></h3>
