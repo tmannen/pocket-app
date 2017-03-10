@@ -1,6 +1,3 @@
-Using the Pocket API for multiple tag search among other things.
+A Web app for searching multiple tags in Pocket saves. Using Python and React.
 
-TODO:
-
-- Use database instead of python sets. DONE
-- Make the search bar prettier and the excerpts not overflow over the divs
+![Auto suggest and search](misc/pocketapp.png)
