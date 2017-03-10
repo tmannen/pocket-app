@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../src/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import _ from 'lodash';
+import $ from 'jquery';
 
 class AutoSuggest extends Component {
 
@@ -12,8 +13,16 @@ class AutoSuggest extends Component {
     }
 
     componentDidMount() {
+        this.tagList();
         let input = document.getElementsByClassName(this.props.keyInputsFromClass)[0];
         input.addEventListener("keydown", this.handleKeys);
+    }
+
+    tagList() {
+        return $.getJSON('http://127.0.0.1:5000/tags')
+            .then((data) => {
+                this.setState({ data: data.tags });
+            });
     }
 
     handleKeys(event) {
@@ -57,7 +66,7 @@ class AutoSuggest extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({data: nextProps.data, inputVal: nextProps.inputVal});
+        this.setState({inputVal: nextProps.inputVal});
     }
 
     handleChange(event) {

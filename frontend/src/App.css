@@ -41,6 +41,10 @@
 .react-tagsinput{
   padding-top: 0 !important;
 }
+
+.col-sm-3 {
+  min-width: 275px;
+}
 .react-tagsinput-tag{
   padding: 4px !important;
   height: 26px;
@@ -92,7 +96,7 @@
 }
 .thumbnail{
   word-wrap: break-word;
-  height: 400px;
+  height: 350px;
   position: relative;
 }
 .thumbnail-container{

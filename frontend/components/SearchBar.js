@@ -18,26 +18,17 @@ class SearchBar extends Component {
         this.handleTagChange = this.handleTagChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.addToTags = this.addToTags.bind(this);
-        this.addQueryTags = this.addQueryTags.bind(this);
     }
 
-    componentDidMount() {
-        this.tagList();
+    componentWillReceiveProps(nextProps) {
         //if url has tag parameters, add them to the search bar
-        if (this.props.tags != undefined) {
-            this.setState({tagInputs: this.props.tags.split(",")})
+        if (nextProps.tags != undefined) {
+            this.setState({tagInputs: nextProps.tags.split(",")})
         }
     }
 
     handleChange(event) {
         this.setState({searchInput: event.target.value});
-    }
-
-    addQueryTags() {
-        //let tags = this.props.location.query.q.split(",");
-        //this.setState({tagInputs: tags});
-        //this.setState({currentValue: ''})
-        console.log(this.props.tags)
     }
 
     handleTagChange(tags){
@@ -55,12 +46,6 @@ class SearchBar extends Component {
         this.setState({currentValue: ''})
     }
 
-    tagList() {
-        return $.getJSON('http://127.0.0.1:5000/tags')
-            .then((data) => {
-                this.setState({ data: data.tags });
-            });
-    }
 
     searchTags() {
         browserHistory.push({
@@ -88,7 +73,6 @@ class SearchBar extends Component {
                                 </span>
                             </div>
                             <AutoSuggest
-                                data={this.state.data}
                                 inputVal={this.state.currentValue}
                                 keyInputsFromClass={"react-tagsinput-input"}
                                 addToTags={this.addToTags}
